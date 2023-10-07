@@ -1,5 +1,11 @@
+import JokeContainer from "modules/joke/components/JokeContainer";
+
 function HomePage() {
-  return <>abc</>;
+  return (
+    <>
+      <JokeContainer />
+    </>
+  );
 }
 
 export default HomePage;
