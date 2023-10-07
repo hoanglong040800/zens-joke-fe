@@ -3,7 +3,6 @@ import { getNextRandomJoke, updateVoteJoke } from "..";
 import { IJoke } from "_core/interface";
 import { useCookies } from "react-cookie";
 import { CookieKey } from "_core/constant";
-import { useCallback } from "react";
 import { UpdateVoteJokeInput } from "../interface";
 
 const JokeContainer = () => {
@@ -16,20 +15,20 @@ const JokeContainer = () => {
   const { mutateAsync: updateVoteJokeMutate, isLoading: isUpdating } =
     useMutation<null, null, UpdateVoteJokeInput>(updateVoteJoke);
 
-  const handleClickVoteJoke = useCallback(
-    async (type: "upvote" | "downvote", jokeId: string | undefined) => {
-      if (!jokeId) {
-        return;
-      }
+  const handleClickVoteJoke = async (
+    type: "upvote" | "downvote",
+    jokeId: string | undefined
+  ) => {
+    if (!jokeId) {
+      return;
+    }
 
-      const updatedCookie = [...(cookies[CookieKey.readJokeIds] || []), jokeId];
-      setCookie(CookieKey.readJokeIds, updatedCookie);
+    const updatedCookie = [...(cookies[CookieKey.readJokeIds] || []), jokeId];
+    setCookie(CookieKey.readJokeIds, updatedCookie);
 
-      await updateVoteJokeMutate({ jokeId, type });
-      await refetch();
-    },
-    []
-  );
+    await updateVoteJokeMutate({ jokeId, type });
+    await refetch();
+  };
 
   if (isLoading || !data) {
     return <p>Loading...</p>;
