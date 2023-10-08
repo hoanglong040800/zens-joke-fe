@@ -4,6 +4,14 @@ import { IJoke } from "_core/interface";
 import { useCookies } from "react-cookie";
 import { CookieKey } from "_core/constant";
 import { UpdateVoteJokeInput } from "../interface";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 const JokeContainer = () => {
   const [cookies, setCookie] = useCookies();
@@ -31,31 +39,43 @@ const JokeContainer = () => {
   };
 
   if (isLoading || !data) {
-    return <p>Loading...</p>;
+    return <CircularProgress />;
   }
 
   if (!data.id) {
-    return <p>Out of joke</p>;
+    return (
+      <Typography variant="h4">
+        That's all the jokes for today! Come back another day!
+      </Typography>
+    );
   }
 
   return (
-    <div>
-      <h4>{data.content}</h4>
+    <Box maxWidth="700px">
+      <Typography variant="body1">{data.content}</Typography>
 
-      <button
-        onClick={() => handleClickVoteJoke("upvote", data.id)}
-        disabled={isUpdating}
-      >
-        Like
-      </button>
+      <Divider sx={{ marginTop: 3 }} />
 
-      <button
-        onClick={() => handleClickVoteJoke("downvote", data.id)}
-        disabled={isUpdating}
-      >
-        Dislike
-      </button>
-    </div>
+      <Stack direction="row" gap={3} mt={3} justifyContent="center">
+        <Button
+          sx={{ bgcolor: "#2b7bda", width: "200px" }}
+          variant="contained"
+          onClick={() => handleClickVoteJoke("upvote", data.id)}
+          disabled={isUpdating}
+        >
+          This is Funny!
+        </Button>
+
+        <Button
+          sx={{ bgcolor: "#54c484", width: "200px" }}
+          variant="contained"
+          onClick={() => handleClickVoteJoke("downvote", data.id)}
+          disabled={isUpdating}
+        >
+          This is not funny
+        </Button>
+      </Stack>
+    </Box>
   );
 };
 
