@@ -1,10 +1,11 @@
 import { BASE_API_URL } from "_core/constant";
 import { UpdateVoteJokeInput } from "../interface";
+import { extractResponse } from "_core/utils";
 
 const ROUTE = `${BASE_API_URL}/jokes`;
 
 export const getNextRandomJoke = async () => {
-  const response = await fetch(`${ROUTE}/random`, {
+  const res = await fetch(`${ROUTE}/random`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -12,16 +13,16 @@ export const getNextRandomJoke = async () => {
     credentials: "include",
   });
 
-  return response.json();
+  return extractResponse(res);
 };
 
 export const updateVoteJoke = async ({ jokeId, type }: UpdateVoteJokeInput) => {
-  const response = await fetch(`${ROUTE}/${jokeId}/${type}`, {
+  const res = await fetch(`${ROUTE}/${jokeId}/${type}`, {
     method: "PATCH",
     headers: {
       "content-type": "application/json",
     },
   });
 
-  return response.json();
+  return extractResponse(res);
 };
