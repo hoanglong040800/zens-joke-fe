@@ -10,7 +10,7 @@ function HomePage() {
 
       <Banner mb={3} />
 
-      <Box display="flex" justifyContent="center" mb={5}>
+      <Box display="flex" justifyContent="center" mb={10}>
         <JokeContainer />
       </Box>
 
